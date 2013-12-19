@@ -25,7 +25,7 @@
    [tawny.owl]
    [tawny.util]
    [cemerick.pomegranate]
-   [protege.model]))
+   [protege model nrepl]))
 
 ;; and here is a test to see that it's all good, against the current version.
 (alter-var-root
@@ -42,21 +42,22 @@
   "Modified version of remove-ontology-maybe which does exactly the same thing
 as the normal one, but calls the relevant protege method instead of the OWL
 API which leaves the GUI in an inconsistent state."
-  [ontologyid]
-  (when (.contains (tawny.owl/owl-ontology-manager) ontologyid)
-    (let [o (.getOntology (tawny.owl/owl-ontology-manager) ontologyid)]
-      (.removeOntology
-       ;; this is the different bit -- remove-ontology-maybe removes from the
-       ;; model manager, but this tends to break things!
-       protege.model/*owl-model-manager* o)
-      ;; remove the ontology options
-      (dosync
-       (swap! tawny.owl/ontology-options-atom
-              dissoc o))
-      ;; remove the ontology from the namespace map
-      (#'tawny.owl/remove-ontology-from-namespace-map o)
-      (tawny.util/run-hook tawny.owl/remove-ontology-hook o)
-      o)))
+  [^org.semanticweb.owlapi.model.OWLOntologyID ontologyid]
+  (let [om (tawny.owl/owl-ontology-manager)]
+    (when (.contains om ontologyid)
+      (let [o (.getOntology om ontologyid)]
+        (.removeOntology
+         ;; this is the different bit -- remove-ontology-maybe removes from the
+         ;; model manager, but this tends to break things!
+         protege.model/*owl-model-manager* o)
+        ;; remove the ontology options
+        (dosync
+         (swap! tawny.owl/ontology-options-atom
+                dissoc o))
+        ;; remove the ontology from the namespace map
+        (#'tawny.owl/remove-ontology-from-namespace-map o)
+        (tawny.util/run-hook tawny.owl/remove-ontology-hook o)
+        o))))
 
 (alter-var-root
  #'tawny.owl/remove-ontology-maybe

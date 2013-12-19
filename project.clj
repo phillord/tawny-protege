@@ -7,5 +7,9 @@
   :scm {:url "https://github.com/phillord/tawny-protege"
         :name "git"}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [uk.org.russet/tawny-owl "1.0"]
-                 [uk.org.russet/nrepl-clojure "1.0.0"]])
+                 [edu.stanford.protege/org.protege.editor.core.application
+                  "5.0.0-beta-05-SNAPSHOT"]
+                 [edu.stanford.protege/org.protege.editor.owl
+                  "5.0.0-beta-05-SNAPSHOT"]
+                 [uk.org.russet/tawny-owl "1.1.0-SNAPSHOT"]
+                 [uk.org.russet/nrepl-clojure "1.1.0-SNAPSHOT"]])
