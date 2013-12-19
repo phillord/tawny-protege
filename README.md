@@ -31,8 +31,8 @@ force loading of tawny-protege. My full `init.clj` looks like this:
 Currently Tawny uses the OWL API version 3.4.8 and depends on (one!) feature
 introduced in it, while Protege uses version 3.4.2. So, if you use tawny
 inside Protege errors will occasionally happen (if you use datatypes
-essentially). Unfortunately, upgrading Protege to 3.4.8 requires a slight
-patch to Protege.
+essentially). You can now build against the development head of Protege
+on github: https://github.com/protegeproject/protege.
 
 I have built an  **unsupported**, **pre-release** version of Protege with
 protege-nrepl (and [protege-tawny](https://github.com/phillord/protege-tawny))
